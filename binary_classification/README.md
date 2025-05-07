@@ -7,13 +7,9 @@
 - **Model Type:** Binary Classification
 - **Algorithm:** XGBoost (Extreme Gradient Boosting)
 
-## Intended Use
-- **Primary Use Case:** To predict the binary 'Class' variable based on the provided features.
-- **Target Users:** Data Scientists, Project Stakeholders, Business Analysts (and hopefully happy reviewers!).
-- **Out-of-Scope Uses:**
-    - Prediction on datasets with significantly different feature distributions or data-generating processes without re-validation.
-    - Use cases requiring highly accurate probabilistic outputs if the isotonic calibration is not deemed sufficient for the specific application's sensitivity to probability accuracy.
-    - Any application where misclassification carries severe, unmitigated risks without further domain-specific risk assessment and mitigation strategies.
+![confusion matrix for champ model](final_confusion_matrix.png)
+
+Confusion matrix on a random 20% test bench.
 
 ## Training Data
 - **Data Sources:** The model was trained on data combined from two CSV files: `data/Training_part1.csv` and `data/Training_part2.csv`. These files were merged based on a common `id` column.
@@ -109,4 +105,4 @@ Based on the evaluation and caveats, consider the following MLOps aspects for pr
     - **Calibration:** Periodically check if the model's probability outputs remain calibrated.
     - **Operational Metrics:** Monitor latency, throughput, error rates of the prediction service.
 - **Retraining Strategy:** Define clear triggers (e.g., performance degradation below a threshold, significant data/concept drift detected) and an automated or semi-automated process for model retraining, validation, and deployment.
-
+- **Metric evaluation:** Evaluate the latency p99 on the model and evaluate the memory usage to make sure the are no memory leaks. Also consider doing additional checks like sensitivity analysis to check that the model does not easily flip prediction with floating numbers changing.
